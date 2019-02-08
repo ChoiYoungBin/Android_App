@@ -14,4 +14,15 @@
     <string name="bottom_home">@string/title_home</string>
     <string name="bottom_lecture">Lecture</string>
     <string name="bottom_cs">CS</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Login</string>
+    <string name="error_invalid_email">Email 규격에 적합하지 않습니다.</string>
+    <string name="error_invalid_password">Password 규격에 적합하지 않습니다.</string>
+    <string name="error_incorrect_password">Email 또는 Password 인증에 실패하였습니다.</string>
+    <string name="error_connect_server">서버 연결에 오류가 발생하였습니다.</string>
 </resources>

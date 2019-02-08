@@ -1,5 +1,7 @@
 package com.codingschool;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -138,5 +140,10 @@ public class MainActivity extends AppCompatActivity
             return false;
         }
     };
+
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
 
 }
