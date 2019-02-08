@@ -75,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
     private Handler mHandler;
-    private TextView mLoginMessageView;
 
     private LoginActivity mThis;
 
@@ -112,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mHandler = new Handler(Looper.getMainLooper());
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mLoginMessageView = findViewById(R.id.login_message);
 
         mThis = this;
     }

@@ -6,4 +6,9 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <!--AlertDialog SignOut-->
+    <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>
