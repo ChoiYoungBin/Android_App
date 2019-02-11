@@ -28,7 +28,7 @@
     <string name="error_connect_server">서버 연결에 오류가 발생하였습니다.</string>
 
     <string name="signout_message">로그 아웃 하시겠습니까?</string>
-    <string name="positive_button">OK</string>
-    <string name="negative_button">Cancel</string>
+    <string name="positive_button">확인</string>
+    <string name="negative_button">취소</string>
 
 </resources>

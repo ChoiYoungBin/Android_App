@@ -61,6 +61,7 @@ import static utils.Constants.USER_TOKEN;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = "LoginActivity";
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -260,7 +261,7 @@ public class LoginActivity extends AppCompatActivity {
             //String uri = "http://10.150.101.185/api/login";
             String uri = Constants.API_LOGIN;
 
-            Log.v("EXECUTING", uri);
+            Log.v(TAG, uri);
 
             //Set up client
             OkHttpClient client = new OkHttpClient();
@@ -282,8 +283,8 @@ public class LoginActivity extends AppCompatActivity {
                 public void onFailure(Call call, IOException e) {
                     mhandler.post( new Runnable() {
                         public void run() {
-                            if(mAuthTask != null)
-                                mAuthTask.onPostExecute(true); // 서버와의 연결 실패
+                        if(mAuthTask != null)
+                            mAuthTask.onPostExecute(true); // 서버와의 연결 실패
                         }
                     });
                 }

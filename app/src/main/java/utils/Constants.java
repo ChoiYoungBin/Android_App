@@ -5,10 +5,27 @@ import java.util.List;
 
 public class Constants {
     public static final String USER_TOKEN = "user_token";
-    public static final String API_URL = "http://10.150.101.185/api";
-    public static final String API_LOGIN = API_URL + "/login";
     public static final String USER_EMAIL = "user_email";
 
+    public static final String API_URL = "http://10.150.101.185/api";
+    public static final String API_LOGIN = API_URL + "/login";
+    public static final String API_USER = API_URL + "/user";
+
+    public static final String USER_ACCESS_CAT = "access_cat";
+    public static final String USER_FAMILIES = "families";
+    public static final String USER_TELS = "tels";
+    public static final String USER_PHOTOS = "photos";
+    public static final String USER_COMMENTS = "comments";
+    public static final String USER__ID = "_id";
+    public static final String USER_CENTER_ID = "center_id";
+    public static final String USER_CENTER_NAME = "center_name";
+    public static final String USER_FULL_NAME = "full_name";
+    public static final String USER_LOGIN_NAME = "login_name";
+    public static final String USER_GEDER = "gender";
+    public static final String USER_RELATION = "relation";
+    public static final String USER_STATUS = "status";
+    public static final String USER_REGED = "reged";
+    public static final String USER_FCM_ID = "fcm_id";
 
     /*
     public static final String IS_ADDED_INDB = "is_added_in_db";

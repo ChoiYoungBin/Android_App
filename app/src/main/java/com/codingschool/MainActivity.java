@@ -6,12 +6,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.view.ContextThemeWrapper;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,12 +31,44 @@ import android.widget.TextView;
 
 import com.codingschool.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import utils.Constants;
+
+import static utils.Constants.USER_ACCESS_CAT;
+import static utils.Constants.USER_CENTER_NAME;
+import static utils.Constants.USER_EMAIL;
+import static utils.Constants.USER_FAMILIES;
+import static utils.Constants.USER_PHOTOS;
+import static utils.Constants.USER_STATUS;
+import static utils.Constants.USER_TELS;
 import static utils.Constants.USER_TOKEN;
+import static utils.Constants.USER__ID;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "MainActivity";
+
     private SharedPreferences mSharedPreferences;
+    private int mPreviousMenuId;
+    private String mToken;
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +92,12 @@ public class MainActivity extends AppCompatActivity
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mHandler = new Handler(Looper.getMainLooper());
 
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mToken = mSharedPreferences.getString(USER_TOKEN, null);
+
+        getProfileInfo();
     }
 
     @Override
@@ -72,19 +114,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        int menu_id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            mTextMessage.setText("Nav Camera");
-        } else if (id == R.id.nav_gallery) {
-            mTextMessage.setText("Nav Gallery");
-        } else if (id == R.id.nav_slideshow) {
-            mTextMessage.setText("Nav SlideShow");
-        } else if (id == R.id.nav_manage) {
-            mTextMessage.setText("Nav Manage");
-        } else if (id == R.id.nav_share) {
-            mTextMessage.setText("Nav Share");
-        } else if (id == R.id.nav_logout) {
+        if (menu_id== R.id.nav_logout) {
             //set AlertDialog before signout
             ContextThemeWrapper crt = new ContextThemeWrapper(this, R.style.AlertDialog);
             AlertDialog.Builder builder = new AlertDialog.Builder(crt);
@@ -112,10 +144,22 @@ public class MainActivity extends AppCompatActivity
                 );
 
             builder.create().show();
+
+            return true; // 이곳에서 종료... Login 화면으로 이동
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        if(mPreviousMenuId == menu_id)
+            return true; // 이곳에서 종료... 별다른 action 없음
+
+        // Fragment 처리
+        // Initially city fragment
+        Fragment fragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+
         return true;
     }
 
@@ -152,4 +196,95 @@ public class MainActivity extends AppCompatActivity
         return intent;
     }
 
-}
+    private void getProfileInfo() {
+
+        // String uri = "http://10.150.101.185/api/user";
+        String uri = Constants.API_USER;
+
+        Log.v(TAG, "url=" + uri);
+
+        //Set up client
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody formBody = new FormBody.Builder().build();
+
+        Request request = new Request.Builder()
+                .header("authorization", mToken)
+                .url(uri)
+                .post(formBody)
+                .build();
+
+        //Setup callback
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "request Failed, message = " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final String res = Objects.requireNonNull(response.body()).string();
+
+                try {
+                    JSONObject json_result = new JSONObject(res);
+                    JSONObject object = new JSONObject(json_result.getString("data"));
+
+                    JSONArray userAccessCatList = new JSONArray(object.getString(USER_ACCESS_CAT));
+                    for(int i = 0 ; i<userAccessCatList.length(); i++){
+                        String userAccessCat = userAccessCatList.get(i).toString();
+                        Log.d(TAG,"userAccessCat = " + userAccessCat);
+                    }
+
+                    JSONArray userFamiliesList = new JSONArray(object.getString(USER_FAMILIES));
+                    for(int i = 0 ; i<userFamiliesList.length(); i++){
+                        JSONObject userFamilies = userFamiliesList.getJSONObject(i);
+                        Log.d(TAG,"userFamilies = " + userFamilies.toString());
+                    }
+
+                    String userTels = object.getString(USER_TELS);
+                    String userPhotos = object.getString(USER_PHOTOS);
+                    String user_Id = object.getString(USER__ID);
+                    String userCenterName = object.getString(USER_CENTER_NAME);
+
+//                    mSharedPreferences.edit().putString(USER_EMAIL, userName);
+//                    mSharedPreferences.edit().putString(USER_STATUS, status);
+
+                    mSharedPreferences.edit().apply();
+
+                    // fillNavigationView(fullName, imageURL);
+
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error parsing user JSON, " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /*
+    "access_cat":["parent"],
+    "families":[{"_id":"5c515b3bf700fd05594bb205","name":"ChoiRang","relation":"daughter"}],
+    "tels":[],
+    "photos":[],
+    "comments":[],
+    "_id":"5c515ae8f700fd05594bb204",
+    "center_id":"5c0f6714c8e5f40230d3f94e",
+    "center_name":"LEGO Education CodingSchool HQ",
+    "first_name":"Young",
+    "last_name":"Choi",
+    "full_name":"ChoiYoung",
+    "login_name":"ybchoi",
+    "gender":"M",
+    "user_type":2,
+    "relation":"father",
+    "birth":"2010-11-25",
+    "address":{"address":"","zipcode":"","city":""},
+    "email":"ybchoi@codingschool.co.kr",
+    "started":"",
+    "status":100,
+    "description":"",
+    "reged":"2019-01-30T08:06:00.362Z",
+    "passwd":"1",
+    "fcm_id":"slfjsdflskflskldlsdflsqoweiroewm",
+    */
+
+ }
