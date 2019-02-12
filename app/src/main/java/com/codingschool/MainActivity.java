@@ -178,7 +178,14 @@ public class MainActivity extends AppCompatActivity
 
         // 그룹 타이틀 메뉴를 선택한 경우 sub 메뉴를 나타나게 함
         if(menu_id == R.id.menu_edu_center) {
-            mNavigationView.getMenu().setGroupVisible(R.id.group_edu_center,true);
+            if(mPreviousMenuId == menu_id) { // 같은 메뉴를 두번 누른 경우
+                mPreviousMenuId = 0;
+                mNavigationView.getMenu().setGroupVisible(R.id.group_edu_center,false);
+            }
+            else {
+                mPreviousMenuId = menu_id;
+                mNavigationView.getMenu().setGroupVisible(R.id.group_edu_center, true);
+            }
             mNavigationView.getMenu().setGroupVisible(R.id.group_notice,false);
             mNavigationView.getMenu().setGroupVisible(R.id.group_cs,false);
             mNavigationView.getMenu().setGroupVisible(R.id.group_me,false);
@@ -187,7 +194,14 @@ public class MainActivity extends AppCompatActivity
         }
         else if(menu_id == R.id.menu_notice) {
             mNavigationView.getMenu().setGroupVisible(R.id.group_edu_center,false);
-            mNavigationView.getMenu().setGroupVisible(R.id.group_notice,true);
+            if(mPreviousMenuId == menu_id) { // 같은 메뉴를 두번 누른 경우
+                mPreviousMenuId = 0;
+                mNavigationView.getMenu().setGroupVisible(R.id.group_notice,false);
+            }
+            else {
+                mPreviousMenuId = menu_id;
+                mNavigationView.getMenu().setGroupVisible(R.id.group_notice, true);
+            }
             mNavigationView.getMenu().setGroupVisible(R.id.group_cs,false);
             mNavigationView.getMenu().setGroupVisible(R.id.group_me,false);
 
@@ -196,7 +210,14 @@ public class MainActivity extends AppCompatActivity
         else if(menu_id == R.id.menu_cs) {
             mNavigationView.getMenu().setGroupVisible(R.id.group_edu_center,false);
             mNavigationView.getMenu().setGroupVisible(R.id.group_notice,false);
-            mNavigationView.getMenu().setGroupVisible(R.id.group_cs,true);
+            if(mPreviousMenuId == menu_id) { // 같은 메뉴를 두번 누른 경우
+                mPreviousMenuId = 0;
+                mNavigationView.getMenu().setGroupVisible(R.id.group_cs,false);
+            }
+            else {
+                mPreviousMenuId = menu_id;
+                mNavigationView.getMenu().setGroupVisible(R.id.group_cs, true);
+            }
             mNavigationView.getMenu().setGroupVisible(R.id.group_me,false);
 
             return true; // 이곳에서 종료...
@@ -205,7 +226,14 @@ public class MainActivity extends AppCompatActivity
             mNavigationView.getMenu().setGroupVisible(R.id.group_edu_center,false);
             mNavigationView.getMenu().setGroupVisible(R.id.group_notice,false);
             mNavigationView.getMenu().setGroupVisible(R.id.group_cs,false);
-            mNavigationView.getMenu().setGroupVisible(R.id.group_me,true);
+            if(mPreviousMenuId == menu_id) { // 같은 메뉴를 두번 누른 경우
+                mPreviousMenuId = 0;
+                mNavigationView.getMenu().setGroupVisible(R.id.group_me,false);
+            }
+            else {
+                mPreviousMenuId = menu_id;
+                mNavigationView.getMenu().setGroupVisible(R.id.group_me, true);
+            }
 
             return true; // 이곳에서 종료...
         }
@@ -295,7 +323,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     StaticClass.families = (ArrayList<Object>)userFamiliesList;
 
-                    // ybchoi temp example start
+                    // ybchoi temp 사용방법 예제 start
                     if(StaticClass.access_cats != null) {
                         for (int i = 0; i < StaticClass.access_cats.size(); i++) {
                             String t_obj = StaticClass.access_cats.get(i);
@@ -363,6 +391,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private boolean FragmentMenuChange(int menu_id) {
+        mPreviousMenuId = menu_id; // 메뉴 아이디를 저장
+
         switch (menu_id) {
             // side 메뉴 처리
             case R.id.nav_lecture_progress:
@@ -421,6 +451,5 @@ public class MainActivity extends AppCompatActivity
                 return true;
         }
         return false;
-
     }
  }
