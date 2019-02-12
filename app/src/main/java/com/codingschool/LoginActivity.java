@@ -261,7 +261,7 @@ public class LoginActivity extends AppCompatActivity {
             //String uri = "http://10.150.101.185/api/login";
             String uri = Constants.API_LOGIN;
 
-            Log.v(TAG, uri);
+            Log.d(TAG, uri);
 
             //Set up client
             OkHttpClient client = new OkHttpClient();
@@ -280,7 +280,7 @@ public class LoginActivity extends AppCompatActivity {
             //Setup callback
             client.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     mhandler.post( new Runnable() {
                         public void run() {
                         if(mAuthTask != null)
@@ -288,9 +288,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 }
-
                 @Override
-                public void onResponse(Call call, final Response response) throws IOException {
+                public void onResponse(@NonNull Call call, @NonNull final Response response) throws IOException {
                     final String res = Objects.requireNonNull(response.body()).string();
                     mhandler.post( new Runnable() {
                         public void run() {

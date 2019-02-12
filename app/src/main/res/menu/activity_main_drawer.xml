@@ -3,36 +3,102 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <item android:title="@string/drawer_edu_center"
+        android:id="@+id/menu_edu_center"
+        android:icon="@drawable/ic_menu_share" />
+
+    <group
+        android:checkableBehavior="none"
+        android:id="@+id/group_edu_center">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_lecture_progress"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_lecture_progress" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_lecture_reviews"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_lecture_reviews" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_course_overviews"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_course_overviews" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Logout" />
-        </menu>
+    <item android:title="@string/drawer_notice"
+        android:id="@+id/menu_notice"
+        android:icon="@drawable/ic_menu_gallery"/>
+    <group
+        android:checkableBehavior="none"
+        android:id="@+id/group_notice">
+        <item
+            android:id="@+id/nav_all"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_all" />
+        <item
+            android:id="@+id/nav_my_messages"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_my_messages" />
+        <item
+            android:id="@+id/nav_public_notices"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_public_notices" />
+        <item
+            android:id="@+id/nav_community"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_community" />
+    </group>
+
+    <item android:title="@string/drawer_cs"
+        android:id="@+id/menu_cs"
+        android:icon="@drawable/ic_menu_gallery"/>
+    <group
+        android:checkableBehavior="none"
+        android:id="@+id/group_cs">
+        <item
+            android:id="@+id/nav_blog"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_blog" />
+        <item
+            android:id="@+id/nav_instagram"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_instagram" />
+        <item
+            android:id="@+id/nav_facebook"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_facebook" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_help" />
+    </group>
+
+    <item android:title="@string/drawer_me"
+        android:id="@+id/menu_me"
+        android:icon="@drawable/ic_menu_gallery"/>
+    <group
+        android:checkableBehavior="none"
+        android:id="@+id/group_me">
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_account" />
+        <item
+            android:id="@+id/nav_purchases"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_purchases" />
+        <item
+            android:id="@+id/nav_terms_privacy"
+            android:icon="@drawable/settings_selector"
+            android:title="@string/drawer_terms_privacy" />
+    </group>
+
+    <item android:title="@string/drawer_settings"
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_menu_gallery">
     </item>
+
+    <item android:title="@string/drawer_logout"
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_menu_send" />
 
 </menu>

@@ -5,4 +5,6 @@
     <item name="ic_menu_manage" type="drawable">@android:drawable/ic_menu_manage</item>
     <item name="ic_menu_share" type="drawable">@android:drawable/ic_menu_share</item>
     <item name="ic_menu_send" type="drawable">@android:drawable/ic_menu_send</item>
+    <item name="arraw_right" type="drawable">@android:drawable/arrow_up_float</item>
+    <item name="arraw_down" type="drawable">@android:drawable/arrow_down_float</item>
 </resources>
