@@ -5,32 +5,38 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import com.codingschool.R;
+import com.codingschool.ui.cs.HelpFragment;
 import com.codingschool.ui.home.HomeFragment;
+import com.codingschool.ui.home.SettingsFragment;
+import com.codingschool.ui.lecture.CourseOverviewsFragment;
+import com.codingschool.ui.lecture.LectureProgressFragment;
+import com.codingschool.ui.lecture.LectureReviewsFragment;
+import com.codingschool.ui.me.AccountFragment;
+import com.codingschool.ui.me.PurchasesFragment;
+import com.codingschool.ui.me.TermsPrivacyFragment;
+import com.codingschool.ui.notice.AllFragment;
+import com.codingschool.ui.notice.CommunityFragment;
+import com.codingschool.ui.notice.MyMessagesFragment;
+import com.codingschool.ui.notice.PublicNoticesFragment;
+import com.codingschool.ui.notice.dummy.DummyContent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,10 +44,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -72,7 +75,9 @@ import static utils.Constants.USER_TOKEN;
 import static utils.Constants.USER__ID;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        AllFragment.OnListFragmentInteractionListener,
+        CourseOverviewsFragment.OnFragmentInteractionListener {
 
     private static final String TAG = "MainActivity";
 
@@ -117,10 +122,9 @@ public class MainActivity extends AppCompatActivity
         mPreviousMenuId = R.id.bottom_home; // 초기에는 Home 메뉴를 사용하여 시작함
 
         // Fragment 처리 ( 첫 번째 : HomeFragment )
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.add(R.id.container, HomeFragment.newInstance());
-        transaction.commit();
+        FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
+        fragment.add(R.id.container, HomeFragment.newInstance());
+        fragment.commit();
 
         // Drawer 메뉴에서 Group 메뉴들을 보이지 않게 함
         mNavigationView.getMenu().setGroupVisible(R.id.group_edu_center,false);
@@ -144,6 +148,7 @@ public class MainActivity extends AppCompatActivity
         // Drawer navigation 메뉴를 처리
         int menu_id = item.getItemId();
 
+        // 로그 아웃 처리는 독립적으로 우선적으로 진행
         if (menu_id== R.id.nav_logout) {
             //set AlertDialog before signout
             ContextThemeWrapper crt = new ContextThemeWrapper(this, R.style.AlertDialog);
@@ -263,8 +268,7 @@ public class MainActivity extends AppCompatActivity
     };
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        return intent;
+        return new Intent(context, MainActivity.class);
     }
 
     // REST API 를 통하여 사용자 정보를 가져와 Global(static) 변수에 저장
@@ -323,7 +327,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     StaticClass.families = (ArrayList<Object>)userFamiliesList;
 
-                    // ybchoi temp 사용방법 예제 start
+                    /* ybchoi temp 사용방법 예제 start
                     if(StaticClass.access_cats != null) {
                         for (int i = 0; i < StaticClass.access_cats.size(); i++) {
                             String t_obj = StaticClass.access_cats.get(i);
@@ -341,7 +345,7 @@ public class MainActivity extends AppCompatActivity
                             Log.d(TAG, "relation = " + t_j_obj.getString("relation"));
                         }
                     }
-                    // ybchoi temp end
+                    */ // ybchoi temp end
 
                     tempJsonArray = new JSONArray(object.getString(USER_TELS));
                     ArrayList userTelList;
@@ -392,35 +396,49 @@ public class MainActivity extends AppCompatActivity
 
     private boolean FragmentMenuChange(int menu_id) {
         mPreviousMenuId = menu_id; // 메뉴 아이디를 저장
+        FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
 
         switch (menu_id) {
             // side 메뉴 처리
             case R.id.nav_lecture_progress:
             case R.id.bottom_lecture:
+                fragment.replace(R.id.container, LectureProgressFragment.newInstance());
+                fragment.commit();
                 return true;
 
             case R.id.nav_lecture_reviews:
             case R.id.bottom_review:
+                fragment.replace(R.id.container, LectureReviewsFragment.newInstance());
+                fragment.commit();
                 return true;
 
             case R.id.nav_course_overviews:
+                fragment.replace(R.id.container, CourseOverviewsFragment.newInstance("ybchoi", "arirang"));
+                fragment.commit();
                 return true;
 
             case R.id.nav_all:
             case R.id.bottom_notice:
+                fragment.replace(R.id.container, AllFragment.newInstance(2));
+                fragment.commit();
                 return true;
 
             case R.id.nav_my_messages:
+                fragment.replace(R.id.container, MyMessagesFragment.newInstance());
+                fragment.commit();
                 return true;
 
             case R.id.nav_public_notices:
+                fragment.replace(R.id.container, PublicNoticesFragment.newInstance());
+                fragment.commit();
                 return true;
 
             case R.id.nav_community:
+                fragment.replace(R.id.container, CommunityFragment.newInstance());
+                fragment.commit();
                 return true;
 
             case R.id.nav_blog:
-            case R.id.bottom_cs:
                 return true;
 
             case R.id.nav_instagram:
@@ -430,26 +448,49 @@ public class MainActivity extends AppCompatActivity
                 return true;
 
             case R.id.nav_help:
+            case R.id.bottom_cs:
+                fragment.replace(R.id.container, HelpFragment.newInstance());
+                fragment.commit();
                 return true;
 
             case R.id.nav_account:
+                fragment.replace(R.id.container, AccountFragment.newInstance());
+                fragment.commit();
                 return true;
 
             case R.id.nav_purchases:
+                fragment.replace(R.id.container, PurchasesFragment.newInstance());
+                fragment.commit();
                 return true;
 
             case R.id.nav_terms_privacy:
+                fragment.replace(R.id.container, TermsPrivacyFragment.newInstance());
+                fragment.commit();
                 return true;
 
             case R.id.nav_settings:
+                fragment.replace(R.id.container, SettingsFragment.newInstance());
+                fragment.commit();
                 return true;
 
 
             // bottom 메뉴 처리
             case R.id.bottom_home:
-//                home_fragment
+                fragment.replace(R.id.container, HomeFragment.newInstance());
+                fragment.commit();
                 return true;
         }
         return false;
     }
- }
+
+    @Override
+    public void onFragmentInteraction(Uri uri){
+        //you can leave it empty
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+        Log.d(TAG,"onListFragmentInteraction" + item.toString());
+    };
+
+}

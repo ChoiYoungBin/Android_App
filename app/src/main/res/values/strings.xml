@@ -10,12 +10,14 @@
 
     <string name="title_home">Home</string>
 
+    <!-- Bottom navigator -->
     <string name="bottom_review">Review</string>
     <string name="bottom_notice">Notice</string>
     <string name="bottom_home">@string/title_home</string>
     <string name="bottom_lecture">Lecture</string>
     <string name="bottom_cs">CS</string>
 
+    <!-- Login Activity -->
     <string name="title_activity_login">Login</string>
 
     <!-- Strings related to login -->
@@ -55,6 +57,21 @@
 
     <!-- Fragment -->
     <string name="fragment_home">HOME Fragment</string>
-    <string name="fragment_lecture">LECTURE Fragment</string>
+    <string name="fragment_lecture_progress">Lecture Progress Fragment</string>
+    <string name="fragment_lecture_reviews">Lecture Reviews Fragment</string>
+    <string name="fragment_course_overviews">Course Overviews Fragment</string>
+    <string name="fragment_all">Notice All Fragment</string>
+    <string name="fragment_my_messages">Notice My Messages Fragment</string>
+    <string name="fragment_public_notices">Notice Public Notices Fragment</string>
+    <string name="fragment_community">Notice Community Fragment</string>
+    <!--<string name="fragment_blog">CS Blog Fragment</string>-->
+    <!--<string name="fragment_instagram">CS Instagram Fragment</string>-->
+    <!--<string name="fragment_facebook">CS Facebook Fragment</string>-->
+    <string name="fragment_help">CS Help Fragment</string>
+    <string name="fragment_account">ME Accounts Fragment</string>
+    <string name="fragment_purchases">ME Purchases Fragment</string>
+    <string name="fragment_terms_privacy">ME Terms / Privacy Fragment</string>
+    <string name="fragment_settings">Settings Fragment</string>
+
 
 </resources>

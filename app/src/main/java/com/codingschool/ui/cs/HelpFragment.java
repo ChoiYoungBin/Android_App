@@ -1,4 +1,4 @@
-package com.codingschool.ui.home;
+package com.codingschool.ui.cs;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -10,26 +10,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codingschool.R;
+import com.codingschool.ui.notice.CommunityViewModel;
 
-public class HomeFragment extends Fragment {
+public class HelpFragment extends Fragment {
 
-    private HomeViewModel mViewModel;
+    private HelpViewModel mViewModel;
 
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static HelpFragment newInstance() {
+        return new HelpFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_help, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(HelpViewModel.class);
         // TODO: Use the ViewModel
     }
 

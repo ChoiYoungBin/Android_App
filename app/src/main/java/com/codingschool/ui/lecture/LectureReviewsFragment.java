@@ -1,4 +1,4 @@
-package com.codingschool.ui.home;
+package com.codingschool.ui.lecture;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -11,25 +11,24 @@ import android.view.ViewGroup;
 
 import com.codingschool.R;
 
-public class HomeFragment extends Fragment {
+public class LectureReviewsFragment extends Fragment {
 
-    private HomeViewModel mViewModel;
+    private LectureReviewsViewModel mViewModel;
 
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static LectureReviewsFragment newInstance() {
+        return new LectureReviewsFragment();
     }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_lecture_reviews, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(LectureReviewsViewModel.class);
         // TODO: Use the ViewModel
     }
 

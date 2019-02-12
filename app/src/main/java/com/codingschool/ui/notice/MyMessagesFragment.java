@@ -1,4 +1,4 @@
-package com.codingschool.ui.home;
+package com.codingschool.ui.notice;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -10,26 +10,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codingschool.R;
+import com.codingschool.ui.lecture.LectureProgressViewModel;
 
-public class HomeFragment extends Fragment {
+public class MyMessagesFragment extends Fragment {
 
-    private HomeViewModel mViewModel;
+    private MyMessagesViewModel mViewModel;
 
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static MyMessagesFragment newInstance() {
+        return new MyMessagesFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_my_messages, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(MyMessagesViewModel.class);
         // TODO: Use the ViewModel
     }
 
